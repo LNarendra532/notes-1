@@ -1,0 +1,312 @@
+🧠 Git Version Rollback ni Eppudu Vadatam?
+
+✅ 1. Apply chesinaka problem vaste (ex: wrong instance_type)
+✅ 2. Incorrect resource added or deleted
+✅ 3. Teammate wrong commit chesinappudu
+🔄 Git Version Rollback Steps
+
+git log                         # commit-id choose cheyyali
+git checkout <commit-id>
+git checkout -b rollback-fix
+terraform plan
+terraform apply
+git add .
+git commit -m "Rollback to stable version"
+git push origin rollback-fix
+git checkout main
+git merge rollback-fix
+
+💻 Git Rollback Code Example
+
+git log --oneline
+git checkout <commit-id>
+git checkout -b rollback-instance-type
+terraform plan
+terraform apply -auto-approve
+git add .
+git commit -m "Rollback: Revert instance_type from t3.large to t2.micro"
+git push origin rollback-instance-type
+git checkout main
+git merge rollback-instance-type
+git push origin main
+
+🏗️ Terraform EC2 Sample Code
+📁 terraform-ec2/
+
+├── main.tf
+├── variables.tf
+├── outputs.tf
+
+main.tf
+
+provider "aws" {
+  region = var.aws_region
+}
+
+resource "aws_instance" "catalogue" {
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  vpc_security_group_ids = [var.security_group_id]
+  subnet_id              = var.subnet_id
+
+  tags = {
+    Name = "catalogue"
+    Env  = var.environment
+  }
+}
+
+variables.tf
+
+variable "aws_region"        { default = "ap-south-1" }
+variable "ami_id"            { default = "ami-0c55b159cbfafe1f0" }
+variable "instance_type"     { default = "t2.micro" }
+variable "subnet_id"         {}
+variable "security_group_id" {}
+variable "environment"       { default = "dev" }
+
+outputs.tf
+
+output "instance_public_ip" {
+  value = aws_instance.catalogue.public_ip
+}
+
+🧰 Initial Git Setup
+
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/<your-username>/terraform-ec2.git
+git push -u origin main
+
+♻️ Rollback Example
+Mistake: Changed to t3.large
+
+Rollback to t2.micro:
+
+git checkout <previous-commit-id>
+git checkout -b rollback-ec2-type
+terraform plan
+terraform apply -auto-approve
+git commit -am "Rollback: Restore EC2 instance type to t2.micro"
+git push origin rollback-ec2-type
+git checkout main
+git merge rollback-ec2-type
+git push origin main
+
+✅ Best Practices
+Practice	Description
+Use remote S3 state	Safe, shared state management
+Tag stable versions	Use git tag v1.0
+Automate plan/apply via CI/CD	GitHub Actions, GitLab, or Terraform Cloud
+Avoid hardcoding secrets	Use SSM / Secrets Manager
+Combine Git + Terraform properly	Safer infrastructure changes
+
+    📘 Use this guide to safely manage Terraform infrastructure changes and recover quickly in case of errors using Git and state backups.
+
+#################################################################
+
+🧪 Example: Mistaken instance_type change
+
+Old:
+
+Always show details
+
+instance_type = "t2.micro"
+
+New:
+
+Always show details
+
+instance_type = "t3.large"
+
+🔁 Rollback Steps:
+
+Always show details
+
+git revert OR git checkout <old-commit>
+terraform plan
+terraform apply
+
+🧠 Git Version Rollback ni Eppudu Vadatam?
+
+✅ 1. Apply chesinaka problem vaste (ex: wrong instance_type)
+✅ 2. Incorrect resource added or deleted
+✅ 3. Teammate wrong commit chesinappudu
+🔄 Git Version Rollback Steps
+
+Always show details
+
+git log                         # commit-id choose cheyyali
+git checkout <commit-id>
+git checkout -b rollback-fix
+terraform plan
+terraform apply
+git add .
+git commit -m "Rollback to stable version"
+git push origin rollback-fix
+git checkout main
+git merge rollback-fix
+
+💻 Git Rollback Code Example
+
+Always show details
+
+git log --oneline
+git checkout <commit-id>
+git checkout -b rollback-instance-type
+terraform plan
+terraform apply -auto-approve
+git add .
+git commit -m "Rollback: Revert instance_type from t3.large to t2.micro"
+git push origin rollback-instance-type
+git checkout main
+git merge rollback-instance-type
+git push origin main
+
+🏗️ Terraform EC2 Sample Code
+📁 terraform-ec2/
+
+Always show details
+
+├── main.tf
+├── variables.tf
+├── outputs.tf
+
+main.tf
+
+Always show details
+
+provider "aws" {
+  region = var.aws_region
+}
+
+resource "aws_instance" "catalogue" {
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  vpc_security_group_ids = [var.security_group_id]
+  subnet_id              = var.subnet_id
+
+  tags = {
+    Name = "catalogue"
+    Env  = var.environment
+  }
+}
+
+variables.tf
+
+Always show details
+
+variable "aws_region"        { default = "ap-south-1" }
+variable "ami_id"            { default = "ami-0c55b159cbfafe1f0" }
+variable "instance_type"     { default = "t2.micro" }
+variable "subnet_id"         {}
+variable "security_group_id" {}
+variable "environment"       { default = "dev" }
+
+outputs.tf
+
+Always show details
+
+output "instance_public_ip" {
+  value = aws_instance.catalogue.public_ip
+}
+
+🧰 Initial Git Setup
+
+Always show details
+
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/<your-username>/terraform-ec2.git
+git push -u origin main
+
+♻️ Rollback Example
+Mistake: Changed to t3.large
+
+Rollback to t2.micro:
+
+Always show details
+git checkout <previous-commit-id>
+git checkout -b rollback-ec2-type
+terraform plan
+terraform apply -auto-approve
+git commit -am "Rollback: Restore EC2 instance type to t
+
+########################
+
+git checkout <commit-id>
+git checkout -b rollback-fix how to implent this one please make an example
+ChatGPT said:
+
+Great! Let's go through a real example of how to use these two Git commands to create a rollback branch from a previous commit.
+📘 What Does This Do?
+
+git checkout <commit-id>       # Moves to an older state of your code
+git checkout -b rollback-fix   # Creates a new branch from that older commit
+
+You can then make changes or use this to apply Terraform and rollback infra.
+💡 Example Scenario
+
+Let's say your Git commit history looks like this:
+
+$ git log --oneline
+
+9f2d3a7 (HEAD -> main) Changed instance_type to t3.large  ❌
+6c5a9f1 Added EC2 module with t2.micro                   ✅
+4d8b2c0 Initial commit
+
+You want to rollback to the commit where instance type was t2.micro → commit 6c5a9f1.
+✅ Step-by-Step Git Rollback Example
+🔹 Step 1: View the log
+
+git log --oneline
+
+Output:
+
+9f2d3a7 Changed instance_type to t3.large
+6c5a9f1 Added EC2 module with t2.micro
+
+🔹 Step 2: Checkout the previous stable commit
+
+git checkout 6c5a9f1
+
+Now you're in detached HEAD state — you’re seeing the old version of the code.
+🔹 Step 3: Create a new branch from this point
+
+git checkout -b rollback-fix
+
+Now you're on a new branch rollback-fix, pointing to the previous good commit.
+🔹 Step 4: Run Terraform
+
+Make sure you're in the Terraform directory. Then:
+
+terraform plan
+terraform apply
+
+Now your infrastructure is rolled back to the stable version (t2.micro).
+🔹 Step 5: Commit (if needed)
+
+If you modified anything else (like version bump or comments):
+
+git add .
+git commit -m "Rollback to t2.micro config"
+
+🔹 Step 6: Push and merge
+
+git push origin rollback-fix
+git checkout main
+git merge rollback-fix
+git push origin main
+
+📌 Final Result
+
+Your main branch is now back to the good state where EC2 was using t2.micro.
+🧠 Summary
+Command	Meaning
+git checkout <commit-id>	Switch to old commit temporarily
+git checkout -b rollback-fix	Create a new branch from that old point
+terraform plan/apply	Apply the rollback on AWS
+git merge	Bring changes back to main

@@ -31,7 +31,11 @@ container orchestrator
 kubernetes from google
 docker swarm vs kubernetes
 
-autoscaling is easy, storage is outside of cluster, rollbacks and multiple deployment strategies are available in kubernetes. networking between containers is little easy in kubernetes
+autoscaling is easy,
+storage is outside of cluster,
+rollbacks and 
+multiple deployment strategies are available in kubernetes.
+networking between containers is little easy in kubernetes
 
 pg owner --> 10 pgs
 

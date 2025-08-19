@@ -16,15 +16,21 @@ spec:
 CrashLoopBackOff -> container is unable to start
 
 Container vs Pod
-pod is the smallest deployable unit in k8, a pod can have 1 or many containers. all containers inside pod share same network and storage.
+pod is the smallest deployable unit in k8, a pod can have 1 or many containers.
+ All containers inside pod share same network and storage.
 
-multi containers are useful in sidecar patterns and proxy patterns. proxy means first proxy container gets the request, it checks whether request should be forwarded to main container or not.
+multi containers are useful in sidecar patterns and proxy patterns.
+ proxy means first proxy container gets the request, it checks whether request should be forwarded to main container or not.
 
-catalogue, user, cart, shipping, payment, frontend can be in same pod as multiple containers but diff ports should be opened by containers..
+catalogue, user, cart, shipping, payment, frontend can be in same pod as multiple containers
+ but diff ports should be opened by containers..
 
-lables are used as selectors for other resources inside kuberentes... useful for filtering resources. lables values we can't keep long values, only 63char
+lables are used as selectors for other resources inside kuberentes... useful for filtering resources.
+ lables values we can't keep long values, only 63char
 
-annotations are similar to labels, it is key value pair, but not used as selectors. annotations are used to provision external resources to kuberentes. we keep external information build url, image registry, etc...annotations values can be 256char
+annotations are similar to labels, it is key value pair, but not used as selectors.
+ annotations are used to provision external resources to kuberentes. 
+ we keep external information build url, image registry, etc...annotations values can be 256char
 
 resource limiting
 =================

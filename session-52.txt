@@ -4,6 +4,27 @@ docker push URL/username/image-name:version
 
 docker push docker.io/joindevops/label:v1
 
+we need to login in VM first then wee need to push
+#docker login -u lvnaren532
+password: need to give
+
+
+
+
+Breakdown:
+
+docker build — Tells Docker to build a new image from a Dockerfile.
+
+-t joindevops/lable:v1 — The -t (tag) flag gives the image a name and version:
+
+joindevops → Docker Hub username or organization (can also be your local repo).
+
+lable → The name of the image.
+
+v1 → The version tag of the image.
+
+. — The build context (current directory), where Docker looks for the Dockerfile and source code.
+
 ENTRYPOINT
 =============
 CMD instruction can be overriden

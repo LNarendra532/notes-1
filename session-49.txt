@@ -1,11 +1,32 @@
 How to create resources in multiple AWS accounts
 	dev, staging, uat, prod
 	
-one AWS account --> one provider --> .aws/credentials
+	one AWS account --> one provider --> .aws/credentials
 
-someone polluted the resource manually in AWS. How to manage this?
+we have to mention alias in provider aws
+provider "aws" {
+  # Configuration options
+  alias = "prod"
+  profile = "prod"
+}
+
+provider "aws" {
+  # Configuration options
+  alias = "dev"
+  profile = "dev"
+
+
+  provider = aws.dev provider = aws.prod this we have to give other wise it will take defaiult
+  ------------------------------
+
+## someone polluted the resource manually in AWS. How to manage this?
 
 terraform taint --> force AWS to recreate the resource
+
+This is useful when a resource has become corrupted, requires replacement due to manual changes outside Terraform, 
+or when you need to trigger a resource update or repair
+
+ex: terraform taint aws_security_group.allow_all_prod
 
 infra is created manually, how can you manage that with terraform?
 
@@ -19,9 +40,15 @@ import
 ========
 1. write provider
 2. write resource block with no arguments, then terraform init
+		`resource "aws_instance" "linux" {
+
+		}
+		#Byusing instance id -terraform import fetch all the data. [terraform import   aws_instance.linux  instance_id]  
 3. then terraform import
 4. terraform fetch all the data about resources into state file
 5. write tf files using state file
+
+Finally tf files handling the resources
 
 You need to create parellel infra
 ================================
@@ -57,9 +84,15 @@ default behaviour
 1. destroy first
 2. replace next
 
+  lifecycle {
+      create_before_destroy = true
+    }
+
 1. create another resource
 2. replace sg in instance with new sg
 3. then remove old sg
+without terraform lifecycle - we cannot remove sg/any resource which are being by the resource -
+ if we use terraform life cycle it can perform above 3 steps
 
 Securing State
 =====================
@@ -68,8 +101,8 @@ Securing State
 3. a dedicate linux instance installed terraform should have role to create resources.
 4. s3 bucket should only allow instances with terraform role attached
 5. encyrpt state
-6. enable versioning
-7. users can have get state files access
+6. enable versioning -versioning means if we do any small chages it will create new file
+7. users can have -get- state files access.
 8. s3 cross region replication to update changes in another region bucket
 
 
