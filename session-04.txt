@@ -58,3 +58,4 @@ passwd <user-name>
 ssh congfiguration 
 =================
 /etc/ssh/sshd_config
+search for Permission Authentication no - change to yes
