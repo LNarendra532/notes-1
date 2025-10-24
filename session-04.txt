@@ -54,3 +54,7 @@ usermod -g devops suresh
 usermod -aG testers suresh
 
 passwd <user-name>
+
+ssh congfiguration 
+=================
+/etc/ssh/sshd_config
